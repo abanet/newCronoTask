@@ -10,8 +10,12 @@ import SwiftUI
 
 struct ContentView: View {
   
-  @ObservedObject  var listaTareas: ListaTareas = ListaTareas()
-  @ObservedObject var reloj = Reloj()
+  @ObservedObject var ddbb: TaskDatabase
+  @ObservedObject private var reloj = Reloj()
+  
+  @State private var existeTarea = false
+  @State private var nuevaTareaNombre: String = ""
+  @State private var mostrarNuevaTarea: Bool = false
   
   var body: some View {
     NavigationView {
@@ -19,83 +23,161 @@ struct ContentView: View {
         Color(UIColor(named: "background")!)
           .edgesIgnoringSafeArea(.all)
           .layoutPriority(1.0)
-        
+
         VStack {
           HStack {
             Text(reloj.tiempo)
               .tracking(2.0)
               .font(.system(.title, design: .monospaced))
+              .foregroundColor(.white)
               .multilineTextAlignment(.trailing)
               .padding([.leading, .trailing])
+            
             Spacer()
           }
           List  {
             Section(header: Text("cabecera"), footer: Text("pie de tabla")) {
-              ForEach(0..<listaTareas.tareas.count) { i in
-                VistaTarea(tarea: self.listaTareas.tareas[i])
-                .onTapGesture {
-                  self.eliminarSeleccion()
-                  self.listaTareas.tareas[i].toggle()
+              ForEach(ddbb.tareas, id: \.self) { tarea in
+                
+                NavigationLink(destination: VistaDetalleTarea()) {
+                  VistaTarea(tarea: tarea)
+                    .onTapGesture {
+                        tarea.toggle()
+                        print("tarea está: \(tarea.seleccionada)")
+                        if tarea.seleccionada {
+                          self.reloj.iniciarCronometro()
+                        } else {
+                          self.reloj.pararCronometro()
+                        }
+                      // self.eliminarSeleccion(excepto: i)
+                    }
+                  .contextMenu {
+                      Button(action: {
+                          // change country setting
+                      }) {
+                          Text("Choose Country")
+                          Image(systemName: "globe")
+                      }
+
+                      Button(action: {
+                          // enable geolocation
+                      }) {
+                          Text("Detect Location")
+                          Image(systemName: "location.circle")
+                      }
+                  }
                 }
+
               }
-              
+                
               .onDelete(perform: deleteTarea)
               .onMove(perform: moveTarea)
             }
           }
           .listStyle(GroupedListStyle())
-          .navigationBarTitle(Text("Crono Task"))
-          .navigationBarItems(trailing: EditButton().padding())
-          
-          
+          .navigationBarTitle(Text("Crono Task").foregroundColor(.white))
+          .navigationBarItems(trailing: EditButton())
         }
+        .blur(radius: mostrarNuevaTarea ? 5 : 0)
        
+//        if mostrarNuevaTarea {
+//          VStack {
+//            VistaNuevaTarea(nombre: $nuevaTareaNombre)
+//          }
+//        }
+        
+        
         VStack {
           Spacer()
-          Button(action: addTarea) {
+          Button(action: { self.mostrarNuevaTarea = true }) {
             Image(systemName: "plus")
           }
           .padding()
           .background(Color(.blue))
           .foregroundColor(Color(.white))
           .mask(Circle())
+          .alert(isPresented: $existeTarea) {
+            Alert(title: Text("Tarea duplicada"), message: Text("La tarea ya existe en la base de datos"), dismissButton: .default(Text("Ok")))
+          }
+          .sheet(isPresented: $mostrarNuevaTarea, onDismiss: {
+            self.nuevaTareaNombre = ""
+          }) {
+            VistaNuevaTarea(nombre:  self.$nuevaTareaNombre, mostrarNuevaTarea: self.$mostrarNuevaTarea, onDismiss: {
+              self.mostrarNuevaTarea = false
+              print("Nombre en dismiss de vistanuevtara: \(self.nuevaTareaNombre)")
+              if !self.nuevaTareaNombre.isEmpty {
+                self.addTarea()
+              }
+            } )
+            }
         }
-        
       }
-      
+    } 
+  }
+  
+  init(ddbb: TaskDatabase) {
+    UITableView.appearance().separatorColor = .clear
+    UITableView.appearance().backgroundColor = UIColor(named: "background")
+    UITableViewCell.appearance().backgroundColor = UIColor(named: "background")
+    self.ddbb = ddbb
+  }
+  
+  // añade una tarea a la base de datos
+  func addTarea() {
+    let tarea = Tarea(nombre: "\(self.nuevaTareaNombre)")
+    if self.ddbb.existeTarea(t: tarea) {
+      self.existeTarea = true
+    } else {
+      self.ddbb.addTask(tarea: tarea)
+    }
+    self.nuevaTareaNombre = "" 
+  }
+  
+  func deleteTarea(at offset: IndexSet) {
+    print("offset: \(offset.startIndex)")
+    let tarea = self.ddbb.tareas[offset.first!]
+    self.ddbb.tareas.remove(atOffsets: offset)
+    self.ddbb.removeTask(tarea: tarea)
+  }
+  
+  func moveTarea(from source: IndexSet, to destination: Int) {
+    self.ddbb.tareas.move(fromOffsets: source, toOffset: destination)
+  }
+  
+  func eliminarSeleccion(excepto: Int) {
+    for i in 0..<(self.ddbb.tareas.count - 1) {
+      if i != excepto {
+        self.ddbb.tareas[i].setSeleccionada(to: false)
+      } else {
+        if self.ddbb.tareas[i].seleccionada {
+          self.ddbb.tareas[i].setSeleccionada(to: true)
+        } else {
+          self.ddbb.tareas[i].setSeleccionada(to: false)
+        }
+      }
     }
     
   }
   
-  init() {
-    UITableView.appearance().separatorColor = .clear
-    UITableView.appearance().backgroundColor = UIColor(named: "background")
-    UITableViewCell.appearance().backgroundColor = UIColor(named: "background")
-    self.reloj.iniciarCronometro()
-  }
-  
-  func addTarea() {
-    self.listaTareas.tareas.insert(Tarea(nombre: "Nueva tarea"), at: 0)
-  }
-  
-  func deleteTarea(at offset: IndexSet) {
-    self.listaTareas.tareas.remove(atOffsets: offset)
-  }
-  
-  func moveTarea(from source: IndexSet, to destination: Int) {
-    self.listaTareas.tareas.move(fromOffsets: source, toOffset: destination)
-  }
-  
-  func eliminarSeleccion() {
-    for i in 0..<(listaTareas.tareas.count - 1) {
-      listaTareas.tareas[i].setSeleccionada(to: false)
+}
+
+struct NavigationConfigurator: UIViewControllerRepresentable {
+    var configure: (UINavigationController) -> Void = { _ in }
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<NavigationConfigurator>) -> UIViewController {
+        UIViewController()
     }
-  }
+    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<NavigationConfigurator>) {
+        if let nc = uiViewController.navigationController {
+            self.configure(nc)
+        }
+    }
+
 }
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView()
+    ContentView(ddbb: TaskDatabase(test: true))
   }
 }
 

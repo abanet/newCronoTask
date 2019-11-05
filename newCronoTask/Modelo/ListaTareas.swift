@@ -10,18 +10,14 @@ import Foundation
 import Combine
 
 class ListaTareas: ObservableObject {
-  var didChange = PassthroughSubject<Void, Never>()
   
-  var tareas: [Tarea] {
-    didSet {
-      didChange.send()
-    }
-  }
+  @Published var tareas: [Tarea]
   
   let nombresTareas = ["Guitarra", "Flow", "Percusión", "Piano", "Estudio iOS", "Guitarra", "Flow", "Percusión", "Piano", "Estudio iOS"]
   
   
   init() {
+    //self.tareas = [Tarea]()
     tareas = nombresTareas.map { Tarea(nombre: $0)}
   }
 }

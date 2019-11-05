@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2AE4727B908D03F154ACFEB5 /* Pods_newCronoTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F8CA66C2CFFEB7F46EB44F /* Pods_newCronoTask.framework */; };
 		C00AE95D235DB858002D595D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AE95C235DB858002D595D /* AppDelegate.swift */; };
 		C00AE95F235DB858002D595D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AE95E235DB858002D595D /* SceneDelegate.swift */; };
 		C00AE961235DB858002D595D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AE960235DB858002D595D /* ContentView.swift */; };
@@ -15,12 +16,22 @@
 		C00AE969235DB85B002D595D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00AE967235DB85B002D595D /* LaunchScreen.storyboard */; };
 		C00AE973235DB900002D595D /* Tarea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AE972235DB900002D595D /* Tarea.swift */; };
 		C00AE975235DBA2F002D595D /* ListaTareas.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AE974235DBA2F002D595D /* ListaTareas.swift */; };
+		C047238823706AE0002326CC /* VistaNuevaTarea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047238723706AE0002326CC /* VistaNuevaTarea.swift */; };
 		C086E979235DF29F00827323 /* VistaTarea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C086E978235DF29F00827323 /* VistaTarea.swift */; };
 		C09547B52360607000EE903F /* Reloj.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09547B42360607000EE903F /* Reloj.swift */; };
 		C0BD748C235F1E58009B29A3 /* Colores.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BD748B235F1E58009B29A3 /* Colores.swift */; };
+		C0C9BD20236ADDFD00315722 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C9BD1F236ADDFD00315722 /* Box.swift */; };
+		C0C9BD22236AF71F00315722 /* TaskDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C9BD21236AF71F00315722 /* TaskDatabase.swift */; };
+		C0C9BD24236AF73300315722 /* Ocurrencia.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C9BD23236AF73300315722 /* Ocurrencia.swift */; };
+		C0C9BD26236AF75600315722 /* Fecha.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C9BD25236AF75600315722 /* Fecha.swift */; };
+		C0C9BE32236B05F400315722 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C9BE31236B05F400315722 /* StringExtensions.swift */; };
+		C0E51FC02369B1B1009F2BC0 /* VistaDetalleTarea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E51FBF2369B1B1009F2BC0 /* VistaDetalleTarea.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		06F8CA66C2CFFEB7F46EB44F /* Pods_newCronoTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_newCronoTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		60427D65F54588996E32D873 /* Pods-newCronoTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newCronoTask.debug.xcconfig"; path = "Pods/Target Support Files/Pods-newCronoTask/Pods-newCronoTask.debug.xcconfig"; sourceTree = "<group>"; };
+		974EC2E7190432BAA8663F8E /* Pods-newCronoTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newCronoTask.release.xcconfig"; path = "Pods/Target Support Files/Pods-newCronoTask/Pods-newCronoTask.release.xcconfig"; sourceTree = "<group>"; };
 		C00AE959235DB858002D595D /* newCronoTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = newCronoTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C00AE95C235DB858002D595D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C00AE95E235DB858002D595D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,9 +42,19 @@
 		C00AE96A235DB85B002D595D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C00AE972235DB900002D595D /* Tarea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tarea.swift; sourceTree = "<group>"; };
 		C00AE974235DBA2F002D595D /* ListaTareas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaTareas.swift; sourceTree = "<group>"; };
+		C047238723706AE0002326CC /* VistaNuevaTarea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VistaNuevaTarea.swift; sourceTree = "<group>"; };
 		C086E978235DF29F00827323 /* VistaTarea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VistaTarea.swift; sourceTree = "<group>"; };
 		C09547B42360607000EE903F /* Reloj.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reloj.swift; sourceTree = "<group>"; };
 		C0BD748B235F1E58009B29A3 /* Colores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colores.swift; sourceTree = "<group>"; };
+		C0C9BD1F236ADDFD00315722 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
+		C0C9BD21236AF71F00315722 /* TaskDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDatabase.swift; sourceTree = "<group>"; };
+		C0C9BD23236AF73300315722 /* Ocurrencia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ocurrencia.swift; sourceTree = "<group>"; };
+		C0C9BD25236AF75600315722 /* Fecha.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fecha.swift; sourceTree = "<group>"; };
+		C0C9BD27236AFD3C00315722 /* FMDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FMDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0C9BD29236AFD6300315722 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		C0C9BD2A236AFD6300315722 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		C0C9BE31236B05F400315722 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		C0E51FBF2369B1B1009F2BC0 /* VistaDetalleTarea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VistaDetalleTarea.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,17 +62,40 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AE4727B908D03F154ACFEB5 /* Pods_newCronoTask.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5AB523090F22D8F20B72889E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0C9BD29236AFD6300315722 /* libsqlite3.0.tbd */,
+				C0C9BD2A236AFD6300315722 /* libsqlite3.tbd */,
+				C0C9BD27236AFD3C00315722 /* FMDB.framework */,
+				06F8CA66C2CFFEB7F46EB44F /* Pods_newCronoTask.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA390867B37DA0EF6D922941 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				60427D65F54588996E32D873 /* Pods-newCronoTask.debug.xcconfig */,
+				974EC2E7190432BAA8663F8E /* Pods-newCronoTask.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C00AE950235DB858002D595D = {
 			isa = PBXGroup;
 			children = (
 				C00AE95B235DB858002D595D /* newCronoTask */,
 				C00AE95A235DB858002D595D /* Products */,
+				BA390867B37DA0EF6D922941 /* Pods */,
+				5AB523090F22D8F20B72889E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +110,7 @@
 		C00AE95B235DB858002D595D /* newCronoTask */ = {
 			isa = PBXGroup;
 			children = (
+				C0C9BE30236B05DB00315722 /* Utilidades */,
 				C00AE970235DB8D5002D595D /* Modelo */,
 				C00AE95C235DB858002D595D /* AppDelegate.swift */,
 				C00AE95E235DB858002D595D /* SceneDelegate.swift */,
@@ -93,6 +138,10 @@
 				C09547B42360607000EE903F /* Reloj.swift */,
 				C00AE972235DB900002D595D /* Tarea.swift */,
 				C00AE974235DBA2F002D595D /* ListaTareas.swift */,
+				C0C9BD1F236ADDFD00315722 /* Box.swift */,
+				C0C9BD23236AF73300315722 /* Ocurrencia.swift */,
+				C0C9BD21236AF71F00315722 /* TaskDatabase.swift */,
+				C0C9BD25236AF75600315722 /* Fecha.swift */,
 			);
 			path = Modelo;
 			sourceTree = "<group>";
@@ -102,8 +151,18 @@
 			children = (
 				C00AE960235DB858002D595D /* ContentView.swift */,
 				C086E978235DF29F00827323 /* VistaTarea.swift */,
+				C0E51FBF2369B1B1009F2BC0 /* VistaDetalleTarea.swift */,
+				C047238723706AE0002326CC /* VistaNuevaTarea.swift */,
 			);
 			path = Vistas;
+			sourceTree = "<group>";
+		};
+		C0C9BE30236B05DB00315722 /* Utilidades */ = {
+			isa = PBXGroup;
+			children = (
+				C0C9BE31236B05F400315722 /* StringExtensions.swift */,
+			);
+			path = Utilidades;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -113,9 +172,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C00AE96D235DB85B002D595D /* Build configuration list for PBXNativeTarget "newCronoTask" */;
 			buildPhases = (
+				E7CF6ACF2F7EB98F04BA50B7 /* [CP] Check Pods Manifest.lock */,
 				C00AE955235DB858002D595D /* Sources */,
 				C00AE956235DB858002D595D /* Frameworks */,
 				C00AE957235DB858002D595D /* Resources */,
+				C8398C993D624E600D827070 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -138,6 +199,7 @@
 				TargetAttributes = {
 					C00AE958235DB858002D595D = {
 						CreatedOnToolsVersion = 11.0;
+						LastSwiftMigration = 1120;
 					};
 				};
 			};
@@ -172,6 +234,44 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C8398C993D624E600D827070 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-newCronoTask/Pods-newCronoTask-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-newCronoTask/Pods-newCronoTask-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-newCronoTask/Pods-newCronoTask-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7CF6ACF2F7EB98F04BA50B7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-newCronoTask-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C00AE955235DB858002D595D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -180,11 +280,18 @@
 				C00AE975235DBA2F002D595D /* ListaTareas.swift in Sources */,
 				C0BD748C235F1E58009B29A3 /* Colores.swift in Sources */,
 				C09547B52360607000EE903F /* Reloj.swift in Sources */,
+				C0C9BD26236AF75600315722 /* Fecha.swift in Sources */,
+				C0C9BD22236AF71F00315722 /* TaskDatabase.swift in Sources */,
 				C086E979235DF29F00827323 /* VistaTarea.swift in Sources */,
 				C00AE95D235DB858002D595D /* AppDelegate.swift in Sources */,
 				C00AE95F235DB858002D595D /* SceneDelegate.swift in Sources */,
 				C00AE961235DB858002D595D /* ContentView.swift in Sources */,
+				C0E51FC02369B1B1009F2BC0 /* VistaDetalleTarea.swift in Sources */,
+				C047238823706AE0002326CC /* VistaNuevaTarea.swift in Sources */,
+				C0C9BE32236B05F400315722 /* StringExtensions.swift in Sources */,
 				C00AE973235DB900002D595D /* Tarea.swift in Sources */,
+				C0C9BD24236AF73300315722 /* Ocurrencia.swift in Sources */,
+				C0C9BD20236ADDFD00315722 /* Box.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,8 +425,10 @@
 		};
 		C00AE96E235DB85B002D595D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 60427D65F54588996E32D873 /* Pods-newCronoTask.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"newCronoTask/Preview Content\"";
 				DEVELOPMENT_TEAM = FLU98JG66T;
@@ -331,6 +440,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = es.codigoswift.newCronoTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -338,8 +449,10 @@
 		};
 		C00AE96F235DB85B002D595D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 974EC2E7190432BAA8663F8E /* Pods-newCronoTask.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"newCronoTask/Preview Content\"";
 				DEVELOPMENT_TEAM = FLU98JG66T;
@@ -351,6 +464,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = es.codigoswift.newCronoTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

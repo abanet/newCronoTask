@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct VistaTarea: View {
-  var tarea: Tarea
+  @ObservedObject var tarea: Tarea
   
   
   var body: some View {
@@ -23,6 +23,7 @@ struct VistaTarea: View {
     .padding()
     .background((tarea.seleccionada) ? Color("fondoCeldaSeleccionada") : Color("fondoCelda"))
     .cornerRadius(10)
+    
   }
 }
 

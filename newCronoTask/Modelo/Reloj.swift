@@ -239,6 +239,7 @@ class Reloj: ObservableObject {
   
   // MARK: Funciones que manejan el timer de la app.
   func iniciarCronometro() {
+      pararCronometro() // asegurar que sólo hay un timer activo
       let aSelector : Selector = #selector(updateTime)
       timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
   }
