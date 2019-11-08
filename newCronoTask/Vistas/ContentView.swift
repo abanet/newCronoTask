@@ -44,12 +44,12 @@ struct ContentView: View {
             footer: Text("Time is money. – Benjamin Franklin.")
             .foregroundColor(.white)) {
               ForEach(ddbb.tareas, id: \.self) { tarea in
-                
-                NavigationLink(destination: VistaDetalleTarea()) {
+                NavigationLink(destination: VistaDetalleTarea(tarea: tarea)) {
                   VistaTarea(tarea: tarea)
                     .onReceive(self.timer) { _ in
                       if tarea.seleccionada {
                         self.reloj.incrementarTiempoUnaCentesima()
+                        tarea.tiempoAcumulado = self.reloj.tiempo
                       }
                     }
                     .onTapGesture {
@@ -67,15 +67,15 @@ struct ContentView: View {
                       Button(action: {
                           // change country setting
                       }) {
-                          Text("Choose Country")
-                          Image(systemName: "globe")
+                          Text("Save")
+                          Image(systemName: "clock")
                       }
 
                       Button(action: {
-                          // enable geolocation
+                        tarea.tiempoAcumulado = Tarea.origenTiempo
                       }) {
-                          Text("Detect Location")
-                          Image(systemName: "location.circle")
+                          Text("Reset")
+                          Image(systemName: "clear")
                       }
                   }
                 }

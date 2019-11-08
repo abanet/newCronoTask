@@ -17,8 +17,9 @@ struct VistaTarea: View {
       Text(tarea.nombre)
         .foregroundColor((tarea.seleccionada) ? Color(.white) : Color(.black))
       Spacer()
-      Text(tarea.tiempo)
+      Text(tarea.tiempoAcumulado)
         .foregroundColor((tarea.seleccionada) ? Color(.white) : Color(.black))
+        .font(.system(.body, design: .monospaced))
     }
     .padding()
     .background((tarea.seleccionada) ? Color("fondoCeldaSeleccionada") : Color("fondoCelda"))

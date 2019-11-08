@@ -9,6 +9,7 @@
 import Foundation
 
 class Tarea: Identifiable, ObservableObject {
+  static let origenTiempo = "00:00:00"
   let id = UUID() // identificador de tarea
   var idTarea: String? = nil // identificador de tarea en bbdd (nil si la tarea no existe en la bbdd)
   var nombre: String
@@ -16,7 +17,7 @@ class Tarea: Identifiable, ObservableObject {
   var fechaCreacion: String
   var horaCreacion: String
   var fechaUltimaVezUtilizada: String
-  var tiempoAcumulado: String?
+  @Published var tiempoAcumulado: String = Tarea.origenTiempo
   var ocurrencias: [Ocurrencia]?
   @Published var seleccionada: Bool
   
@@ -29,6 +30,7 @@ class Tarea: Identifiable, ObservableObject {
     self.fechaCreacion = ahora.fecha
     self.horaCreacion = ahora.hora
     self.fechaUltimaVezUtilizada = ahora.fecha
+    
   }
   
   convenience init(nombre: String, fecha: String, hora: String, fechaUltimaVez: String) {
@@ -60,6 +62,10 @@ class Tarea: Identifiable, ObservableObject {
   
    func setSeleccionada(to nuevoValor: Bool) {
     self.seleccionada = nuevoValor
+  }
+  
+  func resetTiempoAcumulado() {
+    self.tiempo = Tarea.origenTiempo
   }
 }
 

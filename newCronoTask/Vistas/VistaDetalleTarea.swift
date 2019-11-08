@@ -9,13 +9,14 @@
 import SwiftUI
 
 struct VistaDetalleTarea: View {
+   @ObservedObject var tarea: Tarea
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+      Text(tarea.nombre)
     }
 }
 
 struct VistaDetalleTarea_Previews: PreviewProvider {
     static var previews: some View {
-        VistaDetalleTarea()
+        VistaDetalleTarea(tarea: Tarea(nombre: "Nombre tarea"))
     }
 }
