@@ -17,7 +17,7 @@ struct VistaTarea: View {
       Text(tarea.nombre)
         .foregroundColor((tarea.seleccionada) ? Color(.white) : Color(.black))
       Spacer()
-      Text("time not set")
+      Text(tarea.tiempo)
         .foregroundColor((tarea.seleccionada) ? Color(.white) : Color(.black))
     }
     .padding()

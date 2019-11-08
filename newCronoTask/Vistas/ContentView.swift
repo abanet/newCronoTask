@@ -36,7 +36,11 @@ struct ContentView: View {
             Spacer()
           }
           List  {
-            Section(header: Text("cabecera"), footer: Text("pie de tabla")) {
+            Section(
+            header: Text("Press over the task to run the chrono")
+              .foregroundColor(.white),
+            footer: Text("Time is money. – Benjamin Franklin.")
+            .foregroundColor(.white)) {
               ForEach(ddbb.tareas, id: \.self) { tarea in
                 
                 NavigationLink(destination: VistaDetalleTarea()) {
@@ -90,12 +94,27 @@ struct ContentView: View {
         VStack {
           Spacer()
           Button(action: { self.mostrarNuevaTarea = true }) {
-            Image(systemName: "plus")
-          }
-          .padding()
-          .background(Color(.blue))
-          .foregroundColor(Color(.white))
-          .mask(Circle())
+            HStack() {
+              Image(systemName: "plus")
+                .frame(width: 30, height: 30, alignment: .center)
+                .background(Color(UIColor(named: "fondoCelda")!))
+              .mask(Circle())
+              .overlay(Circle().stroke(Color.orange, lineWidth: 1))
+              .padding(8)
+              .foregroundColor(Color(.white))
+              Text("Add new task")
+                .padding(.trailing, 8)
+                .foregroundColor(.white)
+              }
+              .padding(5)
+            .background(Color(UIColor(named: "background")!))
+             .overlay(RoundedRectangle(cornerRadius: 190)
+              .stroke(Color.orange, lineWidth: 2))
+            .cornerRadius(190.0)
+            .shadow(radius: 5, x: 5, y: 5)
+            
+            }
+          
           .alert(isPresented: $existeTarea) {
             Alert(title: Text("Tarea duplicada"), message: Text("La tarea ya existe en la base de datos"), dismissButton: .default(Text("Ok")))
           }
@@ -130,7 +149,7 @@ struct ContentView: View {
     } else {
       self.ddbb.addTask(tarea: tarea)
     }
-    self.nuevaTareaNombre = "" 
+    self.nuevaTareaNombre = ""
   }
   
   func deleteTarea(at offset: IndexSet) {
