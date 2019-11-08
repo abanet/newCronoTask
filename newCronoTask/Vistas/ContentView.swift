@@ -17,6 +17,8 @@ struct ContentView: View {
   @State private var nuevaTareaNombre: String = ""
   @State private var mostrarNuevaTarea: Bool = false
   
+  let timer = Timer.publish(every: 0.01, on: .current, in: .common).autoconnect()
+  
   var body: some View {
     NavigationView {
       ZStack {
@@ -45,13 +47,19 @@ struct ContentView: View {
                 
                 NavigationLink(destination: VistaDetalleTarea()) {
                   VistaTarea(tarea: tarea)
+                    .onReceive(self.timer) { _ in
+                      if tarea.seleccionada {
+                        self.reloj.incrementarTiempoUnaCentesima()
+                      }
+                    }
                     .onTapGesture {
+                      self.marcarTareasComoNoSeleccionadas(excepto: tarea)
                         tarea.toggle()
                         print("tarea está: \(tarea.seleccionada)")
                         if tarea.seleccionada {
-                          self.reloj.iniciarCronometro()
+                          //self.reloj.iniciarCronometro()
                         } else {
-                          self.reloj.pararCronometro()
+                          //self.reloj.pararCronometro()
                         }
                       // self.eliminarSeleccion(excepto: i)
                     }
@@ -175,7 +183,14 @@ struct ContentView: View {
         }
       }
     }
-    
+  }
+  
+  func marcarTareasComoNoSeleccionadas(excepto: Tarea) {
+    for i in 0..<(self.ddbb.tareas.count - 1) {
+      if self.ddbb.tareas[i] != excepto {
+      self.ddbb.tareas[i].setSeleccionada(to: false)
+      }
+    }
   }
   
 }
