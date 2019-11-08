@@ -57,7 +57,7 @@ struct ContentView: View {
                         tarea.toggle()
                         print("tarea está: \(tarea.seleccionada)")
                         if tarea.seleccionada {
-                          //self.reloj.iniciarCronometro()
+                          self.reloj.tiempo = tarea.tiempoAcumulado
                         } else {
                           //self.reloj.pararCronometro()
                         }
