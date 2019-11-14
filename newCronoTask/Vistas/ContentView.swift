@@ -16,6 +16,7 @@ struct ContentView: View {
   @State private var existeTarea = false
   @State private var nuevaTareaNombre: String = ""
   @State private var mostrarNuevaTarea: Bool = false
+  @State private var tiempoCorriendo: Bool = false // Indica si existe alguna tarea contando tiempo.
   
   let timer = Timer.publish(every: 0.01, on: .current, in: .common).autoconnect()
   
@@ -44,7 +45,7 @@ struct ContentView: View {
             footer: Text("Time is money. – Benjamin Franklin.")
             .foregroundColor(.white)) {
               ForEach(ddbb.tareas, id: \.self) { tarea in
-                NavigationLink(destination: VistaDetalleTarea(tarea: tarea)) {
+                NavigationLink(destination: VistaOcurrencias(tarea: tarea)) {
                   VistaTarea(tarea: tarea)
                     .onReceive(self.timer) { _ in
                       if tarea.seleccionada {
@@ -58,14 +59,16 @@ struct ContentView: View {
                         print("tarea está: \(tarea.seleccionada)")
                         if tarea.seleccionada {
                           self.reloj.tiempo = tarea.tiempoAcumulado
+                          self.tiempoCorriendo = true
                         } else {
-                          //self.reloj.pararCronometro()
+                          self.tiempoCorriendo = false
                         }
-                      // self.eliminarSeleccion(excepto: i)
                     }
                   .contextMenu {
                       Button(action: {
-                          // change country setting
+                          // grabar ocurrencia con tiempo acumulado actual
+                        self.addOcurrencia(a: tarea)
+                        self.marcarTareasComoNoSeleccionadas(excepto: nil)
                       }) {
                           Text("Save")
                           Image(systemName: "clock")
@@ -88,16 +91,13 @@ struct ContentView: View {
           }
           .listStyle(GroupedListStyle())
           .navigationBarTitle(Text("Crono Task").foregroundColor(.white))
-          .navigationBarItems(trailing: EditButton())
+          .navigationBarItems(trailing:
+            EditButton()
+              .foregroundColor(.white)
+              .opacity(self.tiempoCorriendo ? 0.5 : 1.0)
+              .disabled(self.tiempoCorriendo)
+          )
         }
-        .blur(radius: mostrarNuevaTarea ? 5 : 0)
-       
-//        if mostrarNuevaTarea {
-//          VStack {
-//            VistaNuevaTarea(nombre: $nuevaTareaNombre)
-//          }
-//        }
-        
         
         VStack {
           Spacer()
@@ -160,6 +160,17 @@ struct ContentView: View {
     self.nuevaTareaNombre = ""
   }
   
+  // Añadir una ocurrencia a la tarea correspondiente
+  // Habría que refactorizar TaskDatabase para que todo lo que cambia la base de datos esté allí
+  func addOcurrencia(a tarea: Tarea) {
+   // if let id = ddbb.idParaTarea(descrip: tarea.nombre) {
+      let nuevaOcurrencia = Ocurrencia(idTask:tarea.nombre, tiempo: tarea.tiempoAcumulado)
+      self.ddbb.addOcurrencia(nuevaOcurrencia)
+      tarea.addOcurrencia(nuevaOcurrencia)
+      tarea.tiempoAcumulado = Tarea.origenTiempo
+  //  }
+  }
+  
   func deleteTarea(at offset: IndexSet) {
     print("offset: \(offset.startIndex)")
     let tarea = self.ddbb.tareas[offset.first!]
@@ -185,11 +196,16 @@ struct ContentView: View {
     }
   }
   
-  func marcarTareasComoNoSeleccionadas(excepto: Tarea) {
-    for i in 0..<(self.ddbb.tareas.count - 1) {
-      if self.ddbb.tareas[i] != excepto {
-      self.ddbb.tareas[i].setSeleccionada(to: false)
+  func marcarTareasComoNoSeleccionadas(excepto: Tarea?) {
+    for i in 0..<(self.ddbb.tareas.count) {
+      if excepto == nil  {
+        self.ddbb.tareas[i].setSeleccionada(to: false)
+      } else {
+        if self.ddbb.tareas[i] != excepto! {
+          self.ddbb.tareas[i].setSeleccionada(to: false)
+        }
       }
+        
     }
   }
   

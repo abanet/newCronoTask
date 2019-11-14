@@ -9,7 +9,7 @@
 import Foundation
 
 class Tarea: Identifiable, ObservableObject {
-  static let origenTiempo = "00:00:00"
+  static let origenTiempo = "00:00,00"
   let id = UUID() // identificador de tarea
   var idTarea: String? = nil // identificador de tarea en bbdd (nil si la tarea no existe en la bbdd)
   var nombre: String
@@ -18,14 +18,14 @@ class Tarea: Identifiable, ObservableObject {
   var horaCreacion: String
   var fechaUltimaVezUtilizada: String
   @Published var tiempoAcumulado: String = Tarea.origenTiempo
-  var ocurrencias: [Ocurrencia]?
+  var ocurrencias: [Ocurrencia] = [Ocurrencia]()
   @Published var seleccionada: Bool
   
   
   init() {
     self.nombre = ""
     self.seleccionada = false
-    self.tiempo = "00:00:00"
+    self.tiempo = "00:00,00"
     let ahora = Fecha()
     self.fechaCreacion = ahora.fecha
     self.horaCreacion = ahora.hora
@@ -67,6 +67,20 @@ class Tarea: Identifiable, ObservableObject {
   func resetTiempoAcumulado() {
     self.tiempo = Tarea.origenTiempo
   }
+  
+  func addOcurrencia(_ ocurrencia: Ocurrencia) {
+    self.ocurrencias.insert(ocurrencia, at: 0)
+  }
+  
+  // Calcular un String con el tiempo acumulado de todas las ocurrencias para añadir al acumulado de la tarea
+  func calcularTiempoAcumulado() -> String {
+    var relojFinal = Reloj()
+    for unaOcurrencia in self.ocurrencias {
+      relojFinal = Reloj.sumar(reloj1: relojFinal, reloj2:unaOcurrencia.reloj)
+    }
+    return relojFinal.tiempo
+  }
+
 }
 
 extension Tarea: Equatable {

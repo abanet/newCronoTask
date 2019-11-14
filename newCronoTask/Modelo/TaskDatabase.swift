@@ -9,9 +9,6 @@
 import UIKit
 import FMDB
 
-protocol protocoloActualizarBBDD {
-  func actualizarBBDD()
-}
 
 class TaskDatabase: ObservableObject {
   
@@ -20,7 +17,7 @@ class TaskDatabase: ObservableObject {
   @Published var tareas: [Tarea] = [Tarea]()
   var ocurrencias: [String:Ocurrencia] = [String:Ocurrencia]() // diccionario que mantiene los acumulados de ocurrencias.
   
-  var delegate: protocoloActualizarBBDD?
+ 
   
   // Init de la base de datos
   // Si no existe un fichero CronoTask.db se crea y se crea la estructura de la base de datos.
@@ -100,7 +97,6 @@ class TaskDatabase: ObservableObject {
       if !resultado {
         print("Error: \(database.lastErrorMessage())")
       } else {
-        //delegate?.actualizarBBDD()
         print("Tarea añadida")
         self.tareas.insert(tarea, at: 0)
         
@@ -122,7 +118,6 @@ class TaskDatabase: ObservableObject {
           return false
         } else {
           removeOcurrencias(idTask: idddbb)
-          delegate?.actualizarBBDD()
           print("Tarea eliminada")
         }
       }
@@ -144,13 +139,13 @@ class TaskDatabase: ObservableObject {
                                  hora: resultados!.string(forColumn: "HORA")!,
                                  fechaUltimaVez: resultados!.string(forColumn: "ULTIMAVEZ")!)
         tarea.tiempoAcumulado = calcularTiempoAcumulado(idTask: tarea.idTarea!)
+        tarea.ocurrencias = self.leerOcurrencias(idTask: resultados!.string(forColumn: "DESCRIPCION")!)
+        print("Ocurrencias para \(tarea.nombre): \(ocurrencias)")
         arrayResultado.append(tarea)
       }
     } else {
       // problemas al abrir la base de datos
     }
-    
-    delegate?.actualizarBBDD()
     return arrayResultado
   }
   
@@ -159,9 +154,7 @@ class TaskDatabase: ObservableObject {
     for tarea in self.tareas {
       if tarea.nombre == descrip, tarea.idTarea != nil {
         return tarea.idTarea!
-      } else {
-        break
-      }
+      } 
     }
     // y si no estaba lo buscamos en la base de datos.
     let database = FMDatabase(path: self.databasePath)
@@ -190,7 +183,6 @@ class TaskDatabase: ObservableObject {
             // cambiamos el nombre en el array
             renombrarTareaEnArray(anteriorNombre: anteriorNombre, nuevoNombre: nuevoNombre)
             print("Tarea modificada.")
-            delegate?.actualizarBBDD()
           }
         }
     } else {
@@ -223,7 +215,6 @@ class TaskDatabase: ObservableObject {
           print("Error: \(database.lastErrorMessage())")
         } else {
           print("Ocurrencia añadida")
-          
         }
       }
   }
@@ -266,7 +257,6 @@ class TaskDatabase: ObservableObject {
       } else {
         // problemas al abrir la base de datos
       }
-    delegate?.actualizarBBDD()
     print("Ocurrencias leídas:\(arrayResultado)")
     return arrayResultado
   }

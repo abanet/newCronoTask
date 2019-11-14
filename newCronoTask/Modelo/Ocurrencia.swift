@@ -8,7 +8,8 @@
 
 import Foundation
 
-class Ocurrencia {
+class Ocurrencia: Identifiable {
+    let id = UUID() // identificador de ocurrencia
     var idTask: String?  // tarea a la que pertenece
     var fecha: String
     var hora: String
@@ -16,11 +17,9 @@ class Ocurrencia {
     
     init() {
         self.reloj = Reloj()
-        
         let unaFecha = Fecha()
         fecha = unaFecha.fecha
         hora = unaFecha.hora
-        
     }
     
     convenience init(idTask: String) {
@@ -76,6 +75,24 @@ class Ocurrencia {
         }
         return resultado
     }
+  
+  class func diccionarioPorFecha(_ ocurrencias: [Ocurrencia]) -> [String: [Ocurrencia]] {
+    var fechaActual = ""
+    var posicionActual = -1
+    var resultado = [String:[Ocurrencia]]()
+    
+    for ocurrencia in ocurrencias {
+      if ocurrencia.fecha == fechaActual { // seguimos en la misma clave
+        resultado[ocurrencia.fecha]?.append(ocurrencia)
+      } else { // hay cambio de fecha
+        posicionActual += 1
+        resultado[ocurrencia.fecha] = [Ocurrencia]()
+        resultado[ocurrencia.fecha]?.append(ocurrencia)
+        fechaActual = ocurrencia.fecha
+      }
+    }
+    return resultado
+  }
     
     class func acumuladoOcurrenciasSeccion(_ ocurrencias:[Ocurrencia])->String {
         var relojTotal = Reloj()
@@ -97,5 +114,21 @@ class Ocurrencia {
     for ocurrencia in ocurrencias {
       print("Ocurrencia de fecha \(ocurrencia.fecha), idTask:\(ocurrencia.idTask), tiempo: \(ocurrencia.reloj.tiempo)")
     }
+  }
+}
+
+extension Ocurrencia: Equatable {
+    static func == (lhs: Ocurrencia, rhs: Ocurrencia) -> Bool {
+      if lhs.id == rhs.id {//let idl = lhs.idTask, let idr = rhs.idTask, idl == idr, lhs.fecha == rhs.fecha, lhs.hora == lhs.hora {
+        return true
+      } else {
+        return false
+      }
+    }
+}
+
+extension Ocurrencia: Hashable {
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
   }
 }
