@@ -174,7 +174,6 @@ struct ContentView: View {
   }
   
   func deleteTarea(at offset: IndexSet) {
-    print("offset: \(offset.startIndex)")
     let tarea = self.ddbb.tareas[offset.first!]
     self.ddbb.tareas.remove(atOffsets: offset)
     self.ddbb.removeTask(tarea: tarea)

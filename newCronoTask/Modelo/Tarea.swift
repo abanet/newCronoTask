@@ -18,7 +18,7 @@ class Tarea: Identifiable, ObservableObject {
   var horaCreacion: String
   var fechaUltimaVezUtilizada: String
   @Published var tiempoAcumulado: String = Tarea.origenTiempo
-  var ocurrencias: [Ocurrencia] = [Ocurrencia]()
+  @Published var ocurrencias: [Ocurrencia] = [Ocurrencia]()
   @Published var seleccionada: Bool
   
   

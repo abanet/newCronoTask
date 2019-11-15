@@ -258,7 +258,7 @@ class TaskDatabase: ObservableObject {
     var arrayResultado = [Ocurrencia]()
       let database = FMDatabase(path: self.databasePath)
       if database.open() {
-        let selectSQL = "SELECT ID, IDTASK, FECHA, HORA, TIEMPO FROM OCURRENCIAS WHERE IDTASK = '\(idTask)' ORDER BY FECHA ASC, HORA ASC"
+        let selectSQL = "SELECT ID, IDTASK, FECHA, HORA, TIEMPO FROM OCURRENCIAS WHERE IDTASK = '\(idTask)'"
         let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: [])
         while resultados?.next() == true {
           let ocurrencia: Ocurrencia = Ocurrencia(idTask: resultados!.string(forColumn: "IDTASK")!,

@@ -40,9 +40,10 @@ struct VistaOcurrencias: View {
                   Text("\(ocurrencia.reloj.tiempo)")
                   }
                 }
+                .onDelete { self.delete(at: $0, fecha: fecha) }
               }
             }
-            .onDelete(perform: deleteOcurrencia)
+            
           }
         }
         .navigationBarTitle("\(tarea.nombre) Log")
@@ -54,6 +55,10 @@ struct VistaOcurrencias: View {
     self.ocurrenciasCategorizadas = Ocurrencia.diccionarioPorFecha(tarea.ocurrencias)
     self.listaFechas = self.ocurrenciasCategorizadas.map{$0.key}
     
+  }
+  
+  func delete(at: IndexSet, fecha: String) {
+    print("intentando borrar en index: \(at.first!) de fecha: \(fecha)")
   }
   
   func deleteOcurrencia(at offset: IndexSet) {
