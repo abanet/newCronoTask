@@ -28,18 +28,16 @@ enum TipoReloj {
 //      00:00,00 No se ha llegado a 60 minutos
 //      00:00:00 Cuando se pasan los 60 minutos. // TODO
 
-class Reloj: ObservableObject {
-    let didChange = PassthroughSubject<Void, Never>()
+class Reloj {
   
     var tipo: TipoReloj = TipoReloj.minutosSegundosDecimas
-    @Published var tiempo: String {
+    var tiempo: String {
         didSet {
             tipo = tipoReloj()
             horas = horasInt()
             minutos = minutosInt()
             segundos = segundosInt()
             centesimas = centesimasInt()
-            self.didChange.send()
         }
     }
     
@@ -236,29 +234,5 @@ class Reloj: ObservableObject {
         }
         return relojFinal
     }
-  
-  // MARK: Funciones que manejan el timer de la app.
-  func iniciarCronometro() {
-      pararCronometro() // asegurar que sólo hay un timer activo
-      let aSelector : Selector = #selector(updateTime)
-      timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
-  }
-    
-  func pararCronometro() {
-      timer.invalidate()
-    }
-
-    
-  @objc private func updateTime(){
-    DispatchQueue.main.async {
-      self.incrementarTiempoUnaCentesima()
-    }
-    
-   
-    }
-    
-  deinit {
-    pararCronometro()
-  }
   
 }

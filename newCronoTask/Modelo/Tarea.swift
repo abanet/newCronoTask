@@ -73,7 +73,7 @@ class Tarea: Identifiable, ObservableObject {
   }
   
   // Calcular un String con el tiempo acumulado de todas las ocurrencias para añadir al acumulado de la tarea
-  func calcularTiempoAcumulado() -> String {
+  func calcularTiempoTotal() -> String {
     var relojFinal = Reloj()
     for unaOcurrencia in self.ocurrencias {
       relojFinal = Reloj.sumar(reloj1: relojFinal, reloj2:unaOcurrencia.reloj)

@@ -21,11 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     // Create the SwiftUI view that provides the window contents.
     let ddbbTareas = TaskDatabase()
-    let contentView = ContentView(ddbb: ddbbTareas)
+    let contentView = ContentView().environmentObject(ddbbTareas)
 
     // Use a UIHostingController as window root view controller.
     if let windowScene = scene as? UIWindowScene {
         let window = UIWindow(windowScene: windowScene)
+        window.tintColor = .white // para tinta de botones back de navigationview, etc
         window.rootViewController = UIHostingController(rootView: contentView
       )
         self.window = window

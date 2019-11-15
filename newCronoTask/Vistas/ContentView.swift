@@ -10,15 +10,16 @@ import SwiftUI
 
 struct ContentView: View {
   
-  @ObservedObject var ddbb: TaskDatabase
-  @ObservedObject private var reloj = Reloj()
+  @EnvironmentObject var ddbb: TaskDatabase
   
   @State private var existeTarea = false
   @State private var nuevaTareaNombre: String = ""
   @State private var mostrarNuevaTarea: Bool = false
   @State private var tiempoCorriendo: Bool = false // Indica si existe alguna tarea contando tiempo.
+  @State private var tiempo: String = "00:00,00"
   
-  let timer = Timer.publish(every: 0.01, on: .current, in: .common).autoconnect()
+  let timer = MiTimer()
+  let reloj = Reloj()
   
   var body: some View {
     NavigationView {
@@ -29,7 +30,7 @@ struct ContentView: View {
 
         VStack {
           HStack {
-            Text(reloj.tiempo)
+            Text(self.tiempo)
               .tracking(2.0)
               .font(.system(.title, design: .monospaced))
               .foregroundColor(.white)
@@ -45,12 +46,13 @@ struct ContentView: View {
             footer: Text("Time is money. – Benjamin Franklin.")
             .foregroundColor(.white)) {
               ForEach(ddbb.tareas, id: \.self) { tarea in
-                NavigationLink(destination: VistaOcurrencias(tarea: tarea)) {
+               // NavigationLink(destination: VistaOcurrencias(tarea: tarea)) {
                   VistaTarea(tarea: tarea)
-                    .onReceive(self.timer) { _ in
+                    .onReceive(self.timer.currentTimePublisher) { _ in
                       if tarea.seleccionada {
                         self.reloj.incrementarTiempoUnaCentesima()
                         tarea.tiempoAcumulado = self.reloj.tiempo
+                        self.tiempo = self.reloj.tiempo
                       }
                     }
                     .onTapGesture {
@@ -65,26 +67,26 @@ struct ContentView: View {
                         }
                     }
                   .contextMenu {
-                      Button(action: {
-                          // grabar ocurrencia con tiempo acumulado actual
-                        self.addOcurrencia(a: tarea)
-                        self.marcarTareasComoNoSeleccionadas(excepto: nil)
-                      }) {
-                          Text("Save")
-                          Image(systemName: "clock")
-                      }
-
-                      Button(action: {
-                        tarea.tiempoAcumulado = Tarea.origenTiempo
-                      }) {
-                          Text("Reset")
-                          Image(systemName: "clear")
-                      }
-                  }
+                    NavigationLink(destination: VistaOcurrencias(tarea: tarea)) {
+                      Text("Log \(tarea.nombre)")
+                    }
+                    Button(action: {
+                      // grabar ocurrencia con tiempo acumulado actual
+                      self.addOcurrencia(a: tarea)
+                      // self.marcarTareasComoNoSeleccionadas(excepto: nil)
+                    }) {
+                      Text("Save")
+                      Image(systemName: "clock")
+                    }
+                    
+                    Button(action: {
+                      tarea.tiempoAcumulado = Tarea.origenTiempo
+                    }) {
+                      Text("Reset")
+                      Image(systemName: "clear")
+                    }
                 }
-
               }
-                
               .onDelete(perform: deleteTarea)
               .onMove(perform: moveTarea)
             }
@@ -142,11 +144,11 @@ struct ContentView: View {
     } 
   }
   
-  init(ddbb: TaskDatabase) {
+  init() {
     UITableView.appearance().separatorColor = .clear
     UITableView.appearance().backgroundColor = UIColor(named: "background")
     UITableViewCell.appearance().backgroundColor = UIColor(named: "background")
-    self.ddbb = ddbb
+   
   }
   
   // añade una tarea a la base de datos
@@ -227,7 +229,7 @@ struct NavigationConfigurator: UIViewControllerRepresentable {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView(ddbb: TaskDatabase(test: true))
+    ContentView()
   }
 }
 

@@ -239,13 +239,26 @@ class TaskDatabase: ObservableObject {
       }
   }
   
+  func removeOcurrencia(_ ocurrencia: Ocurrencia) {
+    let database = FMDatabase(path: self.databasePath)
+    if database.open() {
+      let deleteSQL = "DELETE FROM OCURRENCIAS WHERE IDTASK = '\(ocurrencia.idTask)' AND FECHA = '\(ocurrencia.fecha)' AND HORA = '\(ocurrencia.hora)'"
+      let resultado = database.executeUpdate(deleteSQL, withArgumentsIn: [])
+      if !resultado {
+        print("Error: \(database.lastErrorMessage())")
+      } else {
+        print("Ocurrencia eliminada")
+      }
+    }
+  }
+  
   
   // Se leen las ocurrencias que hay almacenadas en la base de datos y se devuelven en un array.
   func leerOcurrencias(idTask:String) -> [Ocurrencia] {
     var arrayResultado = [Ocurrencia]()
       let database = FMDatabase(path: self.databasePath)
       if database.open() {
-        let selectSQL = "SELECT ID, IDTASK, FECHA, HORA, TIEMPO FROM OCURRENCIAS WHERE IDTASK = '\(idTask)'"
+        let selectSQL = "SELECT ID, IDTASK, FECHA, HORA, TIEMPO FROM OCURRENCIAS WHERE IDTASK = '\(idTask)' ORDER BY FECHA ASC, HORA ASC"
         let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: [])
         while resultados?.next() == true {
           let ocurrencia: Ocurrencia = Ocurrencia(idTask: resultados!.string(forColumn: "IDTASK")!,

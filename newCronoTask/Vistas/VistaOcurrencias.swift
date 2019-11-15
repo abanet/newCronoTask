@@ -9,48 +9,58 @@
 import SwiftUI
 
 struct VistaOcurrencias: View {
-  @ObservedObject private var tarea: Tarea
+  @EnvironmentObject var ddbb: TaskDatabase
+  
+  private var tarea: Tarea
   var ocurrenciasCategorizadas: [String:[Ocurrencia]] = [:]
   var listaFechas: [String]
   
   
   var body: some View {
-    NavigationView {
       ZStack {
         Color(UIColor(named: "background")!)
           .edgesIgnoringSafeArea(.all)
           .layoutPriority(1.0)
         
         VStack {
-          Text("cronoTask Log")
-          Text(tarea.nombre)
-          //Text(tarea.calcularTiempoAcumulado())
+          HStack {
+            Text("Total: " + tarea.calcularTiempoTotal()).tracking(2.0)
+            .font(.system(.headline, design: .monospaced))
+            .foregroundColor(.white)
+            .multilineTextAlignment(.trailing)
+            Spacer()
+          }
+          .padding([.leading])
           List{
             ForEach(self.listaFechas, id: \.self) { fecha in
-              Section (header: Text(fecha)) {
-              Text("hola mundo")
-//              ForEach(self.ocurrenciasCategorizadas[fecha]!, id:\.self) { ocurrencia in
-//                  HStack {
-//                  Text("\(ocurrencia.fecha)")
-//                  Text("\(ocurrencia.hora)")
-//                  //Text("\(ocurrencia.reloj.tiempo)")
-//                  }
-//                }
+              Section (header: Text(fecha).foregroundColor(.orange)) {
+              ForEach(self.ocurrenciasCategorizadas[fecha]!, id:\.self) { ocurrencia in
+                  HStack {
+                  Text("\(ocurrencia.hora)")
+                  Text("\(ocurrencia.reloj.tiempo)")
+                  }
+                }
               }
             }
+            .onDelete(perform: deleteOcurrencia)
           }
         }
+        .navigationBarTitle("\(tarea.nombre) Log")
       }
-    }
   }
   
   init(tarea: Tarea) {
     self.tarea = tarea
     self.ocurrenciasCategorizadas = Ocurrencia.diccionarioPorFecha(tarea.ocurrencias)
     self.listaFechas = self.ocurrenciasCategorizadas.map{$0.key}
-        
+    
   }
   
+  func deleteOcurrencia(at offset: IndexSet) {
+    let ocurrencia = self.tarea.ocurrencias[offset.first!]
+    self.tarea.ocurrencias.remove(atOffsets: offset)
+    self.ddbb.removeOcurrencia(ocurrencia)
+  }
 }
 
 struct VistaDetalleTarea_Previews: PreviewProvider {
