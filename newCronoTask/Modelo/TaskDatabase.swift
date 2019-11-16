@@ -15,10 +15,7 @@ class TaskDatabase: ObservableObject {
   let databaseName = "CronoTask.db"
   let databasePath: String
   @Published var tareas: [Tarea] = [Tarea]()
-  var ocurrencias: [String:Ocurrencia] = [String:Ocurrencia]() // diccionario que mantiene los acumulados de ocurrencias.
-  
  
-  
   // Init de la base de datos
   // Si no existe un fichero CronoTask.db se crea y se crea la estructura de la base de datos.
   // Si ya existe una base de datos se obtienen las tareas que pueda contener.
@@ -77,7 +74,7 @@ class TaskDatabase: ObservableObject {
   }
   
   // Encontrar una tarea dada la descripción
-  func tareaConDescripcion(_ descripcion: String) -> Tarea? {
+  func tareaConNombre(_ descripcion: String) -> Tarea? {
     for unaTarea in tareas {
       if unaTarea.nombre == descripcion {
         return unaTarea
@@ -140,7 +137,7 @@ class TaskDatabase: ObservableObject {
                                  fechaUltimaVez: resultados!.string(forColumn: "ULTIMAVEZ")!)
         tarea.tiempoAcumulado = calcularTiempoAcumulado(idTask: tarea.idTarea!)
         tarea.ocurrencias = self.leerOcurrencias(idTask: resultados!.string(forColumn: "DESCRIPCION")!)
-        print("Ocurrencias para \(tarea.nombre): \(ocurrencias)")
+        print("Ocurrencias para \(tarea.nombre): \(tarea.ocurrencias)")
         arrayResultado.append(tarea)
       }
     } else {
@@ -214,15 +211,13 @@ class TaskDatabase: ObservableObject {
         if !resultado {
           print("Error: \(database.lastErrorMessage())")
         } else {
-          print("Ocurrencia añadida")
+          // añadir la ocurrencia a la tarea correspondiente
+          if let tarea = tareaConNombre(ocu.idTask!) {
+            tarea.ocurrencias.append(ocu)
+            showBBDD()
+          }
         }
       }
-  }
-  // Graba el array de ocurrencias a la base de datos
-  func grabarOcurrenciasBBDD() {
-    for (_ , unaOcurrencia) in self.ocurrencias {
-      addOcurrencia(unaOcurrencia)
-    }
   }
   
   // Elimina las ocurrencias asociadas a una tarea concreta.
@@ -284,5 +279,15 @@ class TaskDatabase: ObservableObject {
       relojFinal = Reloj.sumar(reloj1: relojFinal, reloj2:unaOcurrencia.reloj)
     }
     return relojFinal.tiempo
+  }
+  
+  // MARK: Mostrar contenido bbdd para depuración
+  func showBBDD() {
+    for tarea in tareas {
+      print("Tarea -> \(tarea.nombre)")
+      for ocurrencia in tarea.ocurrencias {
+        print("Ocurrencia: \(ocurrencia.fecha) - \(ocurrencia.hora)")
+      }
+    }
   }
 }

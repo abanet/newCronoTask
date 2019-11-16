@@ -81,6 +81,27 @@ class Tarea: Identifiable, ObservableObject {
     return relojFinal.tiempo
   }
 
+  // devuelve un diccionario con las ocurrencias de la tarea clasificadas por fecha
+  func diccionarioPorFecha() -> [String: [Ocurrencia]] {
+    var fechaActual = ""
+    var resultado = [String:[Ocurrencia]]()
+    
+    for ocurrencia in ocurrencias {
+      if ocurrencia.fecha == fechaActual { // seguimos en la misma clave
+        resultado[ocurrencia.fecha]!.append(ocurrencia)
+      } else { // hay cambio de fecha
+        resultado[ocurrencia.fecha] = [Ocurrencia]()
+        resultado[ocurrencia.fecha]!.append(ocurrencia)
+        fechaActual = ocurrencia.fecha
+      }
+    }
+    return resultado
+  }
+  
+  // devuelve un array con las fechas en las que esta tarea tiene ocurrencias
+  func listaFechas() -> [String] {
+    return self.diccionarioPorFecha().map{$0.key}
+  }
 }
 
 extension Tarea: Equatable {
@@ -92,5 +113,15 @@ extension Tarea: Equatable {
 extension Tarea: Hashable {
   func hash(into hasher: inout Hasher) {
     hasher.combine(id)
+  }
+}
+
+extension Tarea: CustomStringConvertible {
+  var description: String {
+    var descripcionOcurrencias: String = ""
+    for ocurrencia in self.ocurrencias {
+      descripcionOcurrencias += ocurrencia.fecha + "," + ocurrencia.hora + "//"
+    }
+    return "Tarea \(self.nombre)" + descripcionOcurrencias
   }
 }

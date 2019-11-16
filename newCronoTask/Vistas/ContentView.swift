@@ -17,6 +17,7 @@ struct ContentView: View {
   @State private var mostrarNuevaTarea: Bool = false
   @State private var tiempoCorriendo: Bool = false // Indica si existe alguna tarea contando tiempo.
   @State private var tiempo: String = "00:00,00"
+  @State var needRefresh: Bool = false
   
   let timer = MiTimer()
   let reloj = Reloj()
@@ -48,13 +49,6 @@ struct ContentView: View {
               ForEach(ddbb.tareas, id: \.self) { tarea in
                // NavigationLink(destination: VistaOcurrencias(tarea: tarea)) {
                   VistaTarea(tarea: tarea)
-                    .onReceive(self.timer.currentTimePublisher) { _ in
-                      if tarea.seleccionada {
-                        self.reloj.incrementarTiempoUnaCentesima()
-                        tarea.tiempoAcumulado = self.reloj.tiempo
-                        self.tiempo = self.reloj.tiempo
-                      }
-                    }
                     .onTapGesture {
                       self.marcarTareasComoNoSeleccionadas(excepto: tarea)
                         tarea.toggle()
@@ -67,7 +61,7 @@ struct ContentView: View {
                         }
                     }
                   .contextMenu {
-                    NavigationLink(destination: VistaOcurrencias(tarea: tarea)) {
+                    NavigationLink(destination: VistaOcurrencias(tarea: tarea, needRefresh: self.$needRefresh)) {
                       Text("Log \(tarea.nombre)")
                     }
                     Button(action: {
@@ -85,6 +79,13 @@ struct ContentView: View {
                       Text("Reset")
                       Image(systemName: "clear")
                     }
+                }
+                .onReceive(self.timer.currentTimePublisher) { _ in
+                  if tarea.seleccionada {
+                    self.reloj.incrementarTiempoUnaCentesima()
+                    tarea.tiempoAcumulado = self.reloj.tiempo
+                    //self.tiempo = self.reloj.tiempo
+                  }
                 }
               }
               .onDelete(perform: deleteTarea)
@@ -168,7 +169,7 @@ struct ContentView: View {
    // if let id = ddbb.idParaTarea(descrip: tarea.nombre) {
       let nuevaOcurrencia = Ocurrencia(idTask:tarea.nombre, tiempo: tarea.tiempoAcumulado)
       self.ddbb.addOcurrencia(nuevaOcurrencia)
-      tarea.addOcurrencia(nuevaOcurrencia)
+      //tarea.addOcurrencia(nuevaOcurrencia)
       tarea.tiempoAcumulado = Tarea.origenTiempo
   //  }
   }

@@ -10,12 +10,11 @@ import SwiftUI
 
 struct VistaOcurrencias: View {
   @EnvironmentObject var ddbb: TaskDatabase
+  @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
   
-  private var tarea: Tarea
-  var ocurrenciasCategorizadas: [String:[Ocurrencia]] = [:]
-  var listaFechas: [String]
-  
-  
+  let tarea: Tarea
+  @Binding var needRefresh: Bool
+ 
   var body: some View {
       ZStack {
         Color(UIColor(named: "background")!)
@@ -32,9 +31,9 @@ struct VistaOcurrencias: View {
           }
           .padding([.leading])
           List{
-            ForEach(self.listaFechas, id: \.self) { fecha in
+            ForEach(self.tarea.listaFechas(), id: \.self) { fecha in
               Section (header: Text(fecha).foregroundColor(.orange)) {
-              ForEach(self.ocurrenciasCategorizadas[fecha]!, id:\.self) { ocurrencia in
+                ForEach(self.tarea.diccionarioPorFecha()[fecha]!, id:\.self) { ocurrencia in
                   HStack {
                   Text("\(ocurrencia.hora)")
                   Text("\(ocurrencia.reloj.tiempo)")
@@ -43,19 +42,18 @@ struct VistaOcurrencias: View {
                 .onDelete { self.delete(at: $0, fecha: fecha) }
               }
             }
-            
+          }
+          Button(action: {
+            self.needRefresh.toggle()
+             self.presentationMode.wrappedValue.dismiss()
+          }) {
+              Image(systemName: "gobackward").padding()
           }
         }
         .navigationBarTitle("\(tarea.nombre) Log")
-      }
+    }
   }
   
-  init(tarea: Tarea) {
-    self.tarea = tarea
-    self.ocurrenciasCategorizadas = Ocurrencia.diccionarioPorFecha(tarea.ocurrencias)
-    self.listaFechas = self.ocurrenciasCategorizadas.map{$0.key}
-    
-  }
   
   func delete(at: IndexSet, fecha: String) {
     print("intentando borrar en index: \(at.first!) de fecha: \(fecha)")
@@ -66,10 +64,13 @@ struct VistaOcurrencias: View {
     self.tarea.ocurrencias.remove(atOffsets: offset)
     self.ddbb.removeOcurrencia(ocurrencia)
   }
+  
+  
 }
 
 struct VistaDetalleTarea_Previews: PreviewProvider {
   static var previews: some View {
-    VistaOcurrencias(tarea: Tarea(nombre: "Nombre tarea"))
+    
+    VistaOcurrencias(tarea: Tarea(nombre: "Nombre tarea"), needRefresh: .constant(false))
   }
 }

@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import Combine
-import SwiftUI
+
 
 enum PosicionesSeparadoresReloj: Int {
     case primerSeparador = 2

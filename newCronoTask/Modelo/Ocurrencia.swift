@@ -78,16 +78,14 @@ class Ocurrencia: Identifiable {
   
   class func diccionarioPorFecha(_ ocurrencias: [Ocurrencia]) -> [String: [Ocurrencia]] {
     var fechaActual = ""
-    var posicionActual = -1
     var resultado = [String:[Ocurrencia]]()
     
     for ocurrencia in ocurrencias {
       if ocurrencia.fecha == fechaActual { // seguimos en la misma clave
-        resultado[ocurrencia.fecha]?.append(ocurrencia)
+        resultado[ocurrencia.fecha]!.append(ocurrencia)
       } else { // hay cambio de fecha
-        posicionActual += 1
         resultado[ocurrencia.fecha] = [Ocurrencia]()
-        resultado[ocurrencia.fecha]?.append(ocurrencia)
+        resultado[ocurrencia.fecha]!.append(ocurrencia)
         fechaActual = ocurrencia.fecha
       }
     }
