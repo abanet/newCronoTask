@@ -10,11 +10,10 @@ import SwiftUI
 
 struct VistaOcurrencias: View {
   @EnvironmentObject var ddbb: TaskDatabase
-  @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-  
-  let tarea: Tarea
-  @Binding var needRefresh: Bool
  
+  let tarea: Tarea
+ 
+  
   var body: some View {
       ZStack {
         Color(UIColor(named: "background")!)
@@ -43,12 +42,6 @@ struct VistaOcurrencias: View {
               }
             }
           }
-          Button(action: {
-            self.needRefresh.toggle()
-             self.presentationMode.wrappedValue.dismiss()
-          }) {
-              Image(systemName: "gobackward").padding()
-          }
         }
         .navigationBarTitle("\(tarea.nombre) Log")
     }
@@ -71,6 +64,6 @@ struct VistaOcurrencias: View {
 struct VistaDetalleTarea_Previews: PreviewProvider {
   static var previews: some View {
     
-    VistaOcurrencias(tarea: Tarea(nombre: "Nombre tarea"), needRefresh: .constant(false))
+    VistaOcurrencias(tarea: Tarea(nombre: "Nombre tarea"))
   }
 }

@@ -100,7 +100,11 @@ class Tarea: Identifiable, ObservableObject {
   
   // devuelve un array con las fechas en las que esta tarea tiene ocurrencias
   func listaFechas() -> [String] {
-    return self.diccionarioPorFecha().map{$0.key}
+    let arrayFechasString = self.diccionarioPorFecha().map{$0.key}
+    let arrayDates = arrayFechasString.map{Fecha().fechaStringToDate(fecha: $0)}
+    let datesOrdenadas = arrayDates.sorted(by: {$0 > $1})
+    let datesOrdenadasString = datesOrdenadas.map{Fecha.stringFromDate($0)}
+    return datesOrdenadasString
   }
 }
 

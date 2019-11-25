@@ -135,7 +135,7 @@ class TaskDatabase: ObservableObject {
                                  fecha: resultados!.string(forColumn: "FECHA")!,
                                  hora: resultados!.string(forColumn: "HORA")!,
                                  fechaUltimaVez: resultados!.string(forColumn: "ULTIMAVEZ")!)
-        tarea.tiempoAcumulado = calcularTiempoAcumulado(idTask: tarea.idTarea!)
+        tarea.tiempoAcumulado = calcularTiempoAcumulado(idTask: tarea.idTarea!) ?? "00:00,00"
         tarea.ocurrencias = self.leerOcurrencias(idTask: resultados!.string(forColumn: "DESCRIPCION")!)
         print("Ocurrencias para \(tarea.nombre): \(tarea.ocurrencias)")
         arrayResultado.append(tarea)
@@ -272,13 +272,17 @@ class TaskDatabase: ObservableObject {
   
   
   // Calcular un String con el tiempo acumulado de todas las ocurrencias para añadir al acumulado de la tarea
-  func calcularTiempoAcumulado(idTask:String) -> String {
-    let ocurrencias = self.leerOcurrencias(idTask: idTask)
-    var relojFinal = Reloj()
-    for unaOcurrencia in ocurrencias {
-      relojFinal = Reloj.sumar(reloj1: relojFinal, reloj2:unaOcurrencia.reloj)
+  func calcularTiempoAcumulado(idTask:String) -> String? {
+    let ocurrencias: [Ocurrencia] = self.leerOcurrencias(idTask: idTask)//self.leerOcurrencias(idTask: idTask)
+    if !ocurrencias.isEmpty {
+      var relojFinal = Reloj()
+        for unaOcurrencia in ocurrencias {
+          relojFinal = Reloj.sumar(reloj1: relojFinal, reloj2:unaOcurrencia.reloj)
+        }
+      return relojFinal.tiempo
+    } else {
+      return nil
     }
-    return relojFinal.tiempo
   }
   
   // MARK: Mostrar contenido bbdd para depuración

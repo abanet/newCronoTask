@@ -17,7 +17,7 @@ struct ContentView: View {
   @State private var mostrarNuevaTarea: Bool = false
   @State private var tiempoCorriendo: Bool = false // Indica si existe alguna tarea contando tiempo.
   @State private var tiempo: String = "00:00,00"
-  @State var needRefresh: Bool = false
+
   
   let timer = MiTimer()
   let reloj = Reloj()
@@ -37,10 +37,9 @@ struct ContentView: View {
               .foregroundColor(.white)
               .multilineTextAlignment(.trailing)
               .padding([.leading, .trailing])
-            
             Spacer()
           }
-          List  {
+          List {
             Section(
             header: Text("Press over the task to run the chrono")
               .foregroundColor(.white),
@@ -61,9 +60,9 @@ struct ContentView: View {
                         }
                     }
                   .contextMenu {
-                    NavigationLink(destination: VistaOcurrencias(tarea: tarea, needRefresh: self.$needRefresh)) {
+                    NavigationLink(destination: VistaOcurrencias(tarea: tarea)) {
                       Text("Log \(tarea.nombre)")
-                    }
+                    }.buttonStyle(PlainButtonStyle())
                     Button(action: {
                       // grabar ocurrencia con tiempo acumulado actual
                       self.addOcurrencia(a: tarea)
@@ -84,7 +83,7 @@ struct ContentView: View {
                   if tarea.seleccionada {
                     self.reloj.incrementarTiempoUnaCentesima()
                     tarea.tiempoAcumulado = self.reloj.tiempo
-                    //self.tiempo = self.reloj.tiempo
+                    self.tiempo = self.reloj.tiempo
                   }
                 }
               }
@@ -166,12 +165,13 @@ struct ContentView: View {
   // Añadir una ocurrencia a la tarea correspondiente
   // Habría que refactorizar TaskDatabase para que todo lo que cambia la base de datos esté allí
   func addOcurrencia(a tarea: Tarea) {
-   // if let id = ddbb.idParaTarea(descrip: tarea.nombre) {
+    if tarea.tiempoAcumulado != "00:00,00" {
       let nuevaOcurrencia = Ocurrencia(idTask:tarea.nombre, tiempo: tarea.tiempoAcumulado)
       self.ddbb.addOcurrencia(nuevaOcurrencia)
       //tarea.addOcurrencia(nuevaOcurrencia)
       tarea.tiempoAcumulado = Tarea.origenTiempo
-  //  }
+    }
+
   }
   
   func deleteTarea(at offset: IndexSet) {

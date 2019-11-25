@@ -1,0 +1,47 @@
+/*
+  Localizable.strings
+  cronoTask
+
+  Created by Alberto Banet on 26/9/16.
+  Copyright © 2016 Alberto Banet Masa. All rights reserved.
+*/
+
+
+/* Pantalla de nueva tarea */
+"Create a" = "Create a";
+"New Task" = "New Task";
+"Name of the new task" = "Name of the new task";
+
+/* Pantalla de modificación de nombre de tarea */
+"Modifying" = "Modifying";
+"Task" = "Task";
+
+
+// Visualización de fechas
+"MM-dd-yyyy" = "MM-dd-yyyy";
+
+
+// Alertas
+"Ok"     = "Ok";
+"Cancel" = "Cancel";
+
+
+// Alerta de delete
+"Borrar Tarea" = "Delete Task";
+"mensajeBorrarTarea" = "The Task '%@' and all her associated data will be deleted from de database.";
+
+// Alerta de tarea existente
+"TareaExiste" = "The task already exists";
+"MensajeTareaExiste" = "The task '%@' already exists in your database.";
+
+// Formato para las fechas
+"identificadorLocalFecha" = "en_US";
+
+/*
+ * botones al desplazar la celda de tareas.
+ */
+"Delete" = "Delete";
+"Rename" = "Edit";
+"Reset"  = "Reset";
+"Log"    = "Log";
+"Add"    = "Save";

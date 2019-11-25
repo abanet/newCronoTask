@@ -40,7 +40,7 @@ class Reloj {
         }
     }
     
-    private var timer: Timer = Timer()
+    //private var timer: Timer = Timer()
     private var centesimas: Int = 0
     private var segundos: Int = 0
     private var minutos: Int = 0
