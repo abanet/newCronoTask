@@ -6,6 +6,11 @@
   Copyright © 2016 Alberto Banet Masa. All rights reserved.
 */
 
+/* Pantalla principal lista de tareas */
+"Press over the task to run the chrono" = "Press over the task to run the chrono";
+"Time is money. – Benjamin Franklin."   = "Time is money. – Benjamin Franklin.";
+"Duplicated Task" = "Duplicated Task";
+"MensajeTareaExiste" = "The task '%@' already exists in your database.";
 
 /* Pantalla de nueva tarea */
 "Create a" = "Create a";
@@ -30,9 +35,6 @@
 "Borrar Tarea" = "Delete Task";
 "mensajeBorrarTarea" = "The Task '%@' and all her associated data will be deleted from de database.";
 
-// Alerta de tarea existente
-"TareaExiste" = "The task already exists";
-"MensajeTareaExiste" = "The task '%@' already exists in your database.";
 
 // Formato para las fechas
 "identificadorLocalFecha" = "en_US";

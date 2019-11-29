@@ -15,8 +15,8 @@
 		C00AE966235DB85B002D595D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C00AE965235DB85B002D595D /* Preview Assets.xcassets */; };
 		C00AE973235DB900002D595D /* Tarea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AE972235DB900002D595D /* Tarea.swift */; };
 		C00AE975235DBA2F002D595D /* ListaTareas.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AE974235DBA2F002D595D /* ListaTareas.swift */; };
+		C04275B5239122BE00FD7DCE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C04275B7239122BE00FD7DCE /* Localizable.strings */; };
 		C047238823706AE0002326CC /* VistaNuevaTarea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047238723706AE0002326CC /* VistaNuevaTarea.swift */; };
-		C0510BA9238BE87C00842943 /* English.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0510BAB238BE87C00842943 /* English.strings */; };
 		C053C19F237D4E0C0059713C /* MiTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C053C19E237D4E0C0059713C /* MiTimer.swift */; };
 		C086E979235DF29F00827323 /* VistaTarea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C086E978235DF29F00827323 /* VistaTarea.swift */; };
 		C09547B52360607000EE903F /* Reloj.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09547B42360607000EE903F /* Reloj.swift */; };
@@ -43,10 +43,10 @@
 		C00AE96A235DB85B002D595D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C00AE972235DB900002D595D /* Tarea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tarea.swift; sourceTree = "<group>"; };
 		C00AE974235DBA2F002D595D /* ListaTareas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaTareas.swift; sourceTree = "<group>"; };
+		C04275B6239122BE00FD7DCE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C04275B82391230C00FD7DCE /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C04275B92391230E00FD7DCE /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C047238723706AE0002326CC /* VistaNuevaTarea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VistaNuevaTarea.swift; sourceTree = "<group>"; };
-		C0510BAA238BE87C00842943 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/English.strings; sourceTree = "<group>"; };
-		C0510BAC238BE8FF00842943 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/English.strings; sourceTree = "<group>"; };
-		C0510BAD238BE97F00842943 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/English.strings"; sourceTree = "<group>"; };
 		C053C19E237D4E0C0059713C /* MiTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiTimer.swift; sourceTree = "<group>"; };
 		C086E978235DF29F00827323 /* VistaTarea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VistaTarea.swift; sourceTree = "<group>"; };
 		C09547B42360607000EE903F /* Reloj.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reloj.swift; sourceTree = "<group>"; };
@@ -98,6 +98,7 @@
 		C00AE950235DB858002D595D = {
 			isa = PBXGroup;
 			children = (
+				C04275B7239122BE00FD7DCE /* Localizable.strings */,
 				C00AE95B235DB858002D595D /* newCronoTask */,
 				C00AE95A235DB858002D595D /* Products */,
 				BA390867B37DA0EF6D922941 /* Pods */,
@@ -126,7 +127,6 @@
 				C00AE964235DB85B002D595D /* Preview Content */,
 				C0BD748B235F1E58009B29A3 /* Colores.swift */,
 				C0F09DE623796C77005DDB8F /* LaunchScreen.storyboard */,
-				C0510BAB238BE87C00842943 /* English.strings */,
 			);
 			path = newCronoTask;
 			sourceTree = "<group>";
@@ -217,9 +217,9 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
-				es,
+				"es-ES",
 				"en-US",
+				Base,
 			);
 			mainGroup = C00AE950235DB858002D595D;
 			productRefGroup = C00AE95A235DB858002D595D /* Products */;
@@ -237,7 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0F09DE723796C78005DDB8F /* LaunchScreen.storyboard in Resources */,
-				C0510BA9238BE87C00842943 /* English.strings in Resources */,
+				C04275B5239122BE00FD7DCE /* Localizable.strings in Resources */,
 				C00AE966235DB85B002D595D /* Preview Assets.xcassets in Resources */,
 				C00AE963235DB85B002D595D /* Assets.xcassets in Resources */,
 			);
@@ -310,14 +310,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		C0510BAB238BE87C00842943 /* English.strings */ = {
+		C04275B7239122BE00FD7DCE /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C0510BAA238BE87C00842943 /* en */,
-				C0510BAC238BE8FF00842943 /* es */,
-				C0510BAD238BE97F00842943 /* en-US */,
+				C04275B6239122BE00FD7DCE /* en */,
+				C04275B82391230C00FD7DCE /* en-US */,
+				C04275B92391230E00FD7DCE /* es-ES */,
 			);
-			name = English.strings;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

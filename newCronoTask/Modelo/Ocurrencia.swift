@@ -11,7 +11,8 @@ import Foundation
 class Ocurrencia: Identifiable {
     let id = UUID() // identificador de ocurrencia
     var idTask: String?  // tarea a la que pertenece
-    var fecha: String
+  var fecha: String // grabadas en formado MM-dd-yyyy
+  
     var hora: String
     var reloj: Reloj
     

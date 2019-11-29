@@ -41,9 +41,9 @@ struct ContentView: View {
           }
           List {
             Section(
-            header: Text("Press over the task to run the chrono")
+              header: Text("Press over the task to run the chrono".localized)
               .foregroundColor(.white),
-            footer: Text("Time is money. – Benjamin Franklin.")
+              footer: Text("Time is money. – Benjamin Franklin.".localized)
             .foregroundColor(.white)) {
               ForEach(ddbb.tareas, id: \.self) { tarea in
                // NavigationLink(destination: VistaOcurrencias(tarea: tarea)) {
@@ -68,14 +68,14 @@ struct ContentView: View {
                       self.addOcurrencia(a: tarea)
                       // self.marcarTareasComoNoSeleccionadas(excepto: nil)
                     }) {
-                      Text("Save")
+                      Text("Add".localized)
                       Image(systemName: "clock")
                     }
                     
                     Button(action: {
                       tarea.tiempoAcumulado = Tarea.origenTiempo
                     }) {
-                      Text("Reset")
+                      Text("Reset".localized)
                       Image(systemName: "clear")
                     }
                 }
@@ -112,7 +112,7 @@ struct ContentView: View {
               .overlay(Circle().stroke(Color.orange, lineWidth: 1))
               .padding(8)
               .foregroundColor(Color(.white))
-              Text("Add new task")
+              Text("Add new task".localized)
                 .padding(.trailing, 8)
                 .foregroundColor(.white)
               }
@@ -126,14 +126,14 @@ struct ContentView: View {
             }
           
           .alert(isPresented: $existeTarea) {
-            Alert(title: Text("Tarea duplicada"), message: Text("La tarea ya existe en la base de datos"), dismissButton: .default(Text("Ok")))
+            Alert(title: Text("Duplicated Task"), message: Text("MensajeTareaExiste".localized), dismissButton: .default(Text("Ok")))
           }
           .sheet(isPresented: $mostrarNuevaTarea, onDismiss: {
             self.nuevaTareaNombre = ""
           }) {
             VistaNuevaTarea(nombre:  self.$nuevaTareaNombre, mostrarNuevaTarea: self.$mostrarNuevaTarea, onDismiss: {
               self.mostrarNuevaTarea = false
-              print("Nombre en dismiss de vistanuevtara: \(self.nuevaTareaNombre)")
+              print("Nombre en dismiss de vistanuevatarea: \(self.nuevaTareaNombre)")
               if !self.nuevaTareaNombre.isEmpty {
                 self.addTarea()
               }

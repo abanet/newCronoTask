@@ -82,18 +82,19 @@ class Tarea: Identifiable, ObservableObject {
   }
 
   // devuelve un diccionario con las ocurrencias de la tarea clasificadas por fecha
+  // La fecha tiene que ir localizada
   func diccionarioPorFecha() -> [String: [Ocurrencia]] {
     var fechaActual = ""
     var resultado = [String:[Ocurrencia]]()
     
     for ocurrencia in ocurrencias {
       if ocurrencia.fecha == fechaActual { // seguimos en la misma clave
-        resultado[ocurrencia.fecha]!.append(ocurrencia)
-      } else { // hay cambio de fecha
-        resultado[ocurrencia.fecha] = [Ocurrencia]()
-        resultado[ocurrencia.fecha]!.append(ocurrencia)
-        fechaActual = ocurrencia.fecha
-      }
+          resultado[ocurrencia.fecha]!.append(ocurrencia)
+        } else { // hay cambio de fecha
+          resultado[ocurrencia.fecha] = [Ocurrencia]()
+          resultado[ocurrencia.fecha]!.append(ocurrencia)
+          fechaActual = ocurrencia.fecha
+        }
     }
     return resultado
   }

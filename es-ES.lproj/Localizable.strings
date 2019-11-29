@@ -6,6 +6,13 @@
   Copyright © 2016 Alberto Banet Masa. All rights reserved.
 */
 
+/* Pantalla principal lista de tareas */
+"Press over the task to run the chrono" = "Pulsa sobre la tarea para iniciar cronómetro";
+"Time is money. – Benjamin Franklin."   = "El tiempo es dinero. – Benjamin Franklin.";
+"Duplicated Task" = "Duplicated Task";
+"MensajeTareaExiste" = "The task '%@' already exists in your database.";
+
+
 /* Pantalla de nuevo evento */
 "Create a" = "Crea una";
 "New Task" = "Nueva Tarea";
@@ -24,11 +31,6 @@
 "Ok"     = "Ok";
 "Cancel" = "Cancelar";
 
-
-// Alerta de borrado
-"Borrar Tarea" = "Borrar Tarea";
-"mensajeBorrarTarea" = "La tarea '%@' y todo su historial se eliminará de la base de datos";
-
 // Alerta de tarea existente
 "TareaExiste" = "La tarea ya existe";
 "MensajeTareaExiste" = "La tarea '%@' ya existe en la base de datos.";
@@ -39,8 +41,8 @@
 /*
  * botones al desplazar la celda de tareas.
  */
-"Delete" = "Delete";
-"Rename" = "Edit";
+"Delete" = "Borrar";
+"Rename" = "Editar";
 "Reset"  = "Reset";
 "Log"    = "Log";
-"Add"    = "Save";
+"Add"    = "Grabar";

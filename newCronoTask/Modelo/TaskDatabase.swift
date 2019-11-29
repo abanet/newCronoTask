@@ -251,20 +251,20 @@ class TaskDatabase: ObservableObject {
   // Se leen las ocurrencias que hay almacenadas en la base de datos y se devuelven en un array.
   func leerOcurrencias(idTask:String) -> [Ocurrencia] {
     var arrayResultado = [Ocurrencia]()
-      let database = FMDatabase(path: self.databasePath)
-      if database.open() {
-        let selectSQL = "SELECT ID, IDTASK, FECHA, HORA, TIEMPO FROM OCURRENCIAS WHERE IDTASK = '\(idTask)'"
-        let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: [])
-        while resultados?.next() == true {
+    let database = FMDatabase(path: self.databasePath)
+    if database.open() {
+      let selectSQL = "SELECT ID, IDTASK, FECHA, HORA, TIEMPO FROM OCURRENCIAS WHERE IDTASK = '\(idTask)'"
+      let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: [])
+      while resultados?.next() == true {
           let ocurrencia: Ocurrencia = Ocurrencia(idTask: resultados!.string(forColumn: "IDTASK")!,
                                                   fecha: resultados!.string(forColumn: "FECHA")!,
                                                   hora: resultados!.string(forColumn: "HORA")!,
                                                   tiempo: resultados!.string(forColumn: "TIEMPO")!)
           arrayResultado.append(ocurrencia)
-        }
-      } else {
-        // problemas al abrir la base de datos
       }
+    } else {
+      // problemas al abrir la base de datos
+    }
     print("Ocurrencias leídas:\(arrayResultado)")
     return arrayResultado
   }

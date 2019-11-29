@@ -16,12 +16,28 @@ class Fecha: NSObject {
         let date = Date()
         let formateador = DateFormatter()
         // El formateador de fecha lo mantenemos siempre a MM-dd-yyy para guardarlo en el mismo formato en la bbdd
-        formateador.dateFormat = "MM-dd-yyyy" //NSLocalizedString("MM-dd-yyyy", comment: "Formato de fecha")
+        formateador.dateFormat = "MM-dd-yyyy"
         fecha = formateador.string(from: date)
         formateador.dateFormat = "HH:mm"
         hora = formateador.string(from: date)
         super.init()
     }
+  
+  init(date: Date) {
+    let formateador = DateFormatter()
+    // El formateador de fecha lo mantenemos siempre a MM-dd-yyy para guardarlo en el mismo formato en la bbdd
+    formateador.dateFormat = "MM-dd-yyyy"
+    fecha = formateador.string(from: date)
+    formateador.dateFormat = "HH:mm"
+    hora = formateador.string(from: date)
+    super.init()
+  }
+  
+  init(fecha: String, hora: String) {
+    self.fecha = fecha
+    self.hora = hora
+  }
+  
     
     class func devolverFechaLocalizada(fecha: String)-> String?{
         let formateador = DateFormatter()
@@ -29,15 +45,17 @@ class Fecha: NSObject {
         formateador.dateFormat = "MM-dd-yyyy"
         let date = formateador.date(from: fecha)
         // formato en el que mostraremos la fecha
-        formateador.dateFormat = NSLocalizedString("MM-dd-yyyy", comment: "Formato de fecha")
-        return formateador.string(from: date!)
+      formateador.dateFormat = "MM-dd-yyyy".localized
+        let resultado = formateador.string(from: date!)
+        return resultado
     }
     
   // Convierte una fecha en una cadena según el formato MM-dd-yyyy
   class func stringFromDate(_ date: Date) -> String {
       let formatter = DateFormatter()
-      formatter.dateFormat = NSLocalizedString("MM-dd-yyyy", comment: "Formato de fecha")
-      return formatter.string(from: date)
+      formatter.dateFormat = "MM-dd-yyyy" 
+      let resultado =  formatter.string(from: date)
+      return resultado
   }
   
     // dada una fecha en formato MM-dd-yyy se devuelve el literal localizado: Lunes, 10 de octubre de 2016.
@@ -57,7 +75,7 @@ class Fecha: NSObject {
         return fechaTemp!
     }
     
-    // fecha completa: fecha con  hora incluida.
+    // fecha completa: fecha con  hora incluida. ¡¡¡NO ESTÁ LOCALIZADO!!!
     func fechaCompletaStringToDate(fechaCompleta: String) -> Date {
         let formateador = DateFormatter()
         formateador.dateFormat = "MM-dd-yyyyHH:mm"

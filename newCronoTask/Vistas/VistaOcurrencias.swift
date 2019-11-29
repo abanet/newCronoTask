@@ -31,7 +31,7 @@ struct VistaOcurrencias: View {
           .padding([.leading])
           List{
             ForEach(self.tarea.listaFechas(), id: \.self) { fecha in
-              Section (header: Text(fecha).foregroundColor(.orange)) {
+              Section (header: Text(Fecha.devolverFechaLocalizada(fecha: fecha) ?? "").foregroundColor(.orange)) {
                 ForEach(self.tarea.diccionarioPorFecha()[fecha]!, id:\.self) { ocurrencia in
                   HStack {
                   Text("\(ocurrencia.hora)")
