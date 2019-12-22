@@ -12,12 +12,12 @@ class Tarea: Identifiable, ObservableObject {
   static let origenTiempo = "00:00,00"
   let id = UUID() // identificador de tarea
   var idTarea: String? = nil // identificador de tarea en bbdd (nil si la tarea no existe en la bbdd)
-  var nombre: String
+  @Published var nombre: String
   var tiempo: String
   var fechaCreacion: String
   var horaCreacion: String
   var fechaUltimaVezUtilizada: String
-  @Published var tiempoAcumulado: String = Tarea.origenTiempo
+  @Published var tiempoAcumulado: String = Tarea.origenTiempo 
   @Published var ocurrencias: [Ocurrencia] = [Ocurrencia]()
   @Published var seleccionada: Bool
   

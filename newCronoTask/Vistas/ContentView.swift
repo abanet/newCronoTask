@@ -17,7 +17,7 @@ struct ContentView: View {
   @State private var mostrarNuevaTarea: Bool = false
   @State private var tiempoCorriendo: Bool = false // Indica si existe alguna tarea contando tiempo.
   @State private var tiempo: String = "00:00,00"
-
+  
   
   let timer = MiTimer()
   let reloj = Reloj()
@@ -37,6 +37,7 @@ struct ContentView: View {
               .foregroundColor(.white)
               .multilineTextAlignment(.trailing)
               .padding([.leading, .trailing])
+            
             Spacer()
           }
           List {
@@ -126,7 +127,7 @@ struct ContentView: View {
             }
           
           .alert(isPresented: $existeTarea) {
-            Alert(title: Text("Duplicated Task"), message: Text("MensajeTareaExiste".localized), dismissButton: .default(Text("Ok")))
+            Alert(title: Text("Duplicated Task".localized), message: Text("MensajeTareaExiste".localized), dismissButton: .default(Text("Ok")))
           }
           .sheet(isPresented: $mostrarNuevaTarea, onDismiss: {
             self.nuevaTareaNombre = ""
@@ -141,14 +142,13 @@ struct ContentView: View {
             }
         }
       }
-    } 
+    }
   }
   
   init() {
     UITableView.appearance().separatorColor = .clear
     UITableView.appearance().backgroundColor = UIColor(named: "background")
     UITableViewCell.appearance().backgroundColor = UIColor(named: "background")
-   
   }
   
   // añade una tarea a la base de datos

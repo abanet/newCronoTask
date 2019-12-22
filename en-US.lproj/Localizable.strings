@@ -10,7 +10,8 @@
 "Press over the task to run the chrono" = "Press over the task to run the chrono";
 "Time is money. – Benjamin Franklin."   = "Time is money. – Benjamin Franklin.";
 "Duplicated Task" = "Duplicated Task";
-"MensajeTareaExiste" = "The task '%@' already exists in your database.";
+"MensajeTareaExiste" = "That task already exists in your database.";
+"Add new task" = "Add new task";
 
 /* Pantalla de nueva tarea */
 "Create a" = "Create a";

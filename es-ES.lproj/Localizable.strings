@@ -10,8 +10,8 @@
 "Press over the task to run the chrono" = "Pulsa sobre la tarea para iniciar cronómetro";
 "Time is money. – Benjamin Franklin."   = "El tiempo es dinero. – Benjamin Franklin.";
 "Duplicated Task" = "Duplicated Task";
-"MensajeTareaExiste" = "The task '%@' already exists in your database.";
-
+"MensajeTareaExiste" = "Existe ya una tarea con ese nombre.";
+"Add new task" = "Nueva Tarea";
 
 /* Pantalla de nuevo evento */
 "Create a" = "Crea una";
