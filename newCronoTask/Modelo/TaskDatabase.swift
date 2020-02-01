@@ -188,8 +188,36 @@ class TaskDatabase: ObservableObject {
     }
   }
   
+    func actualizarFechaTarea(_ task: Tarea, fecha: String, hora: String) {
+        if let id = task.idTarea {
+            let database = FMDatabase(path: self.databasePath)
+            if database.open() {
+              let modifySQL = "UPDATE TASKS SET FECHA = '\(fecha)', HORA = '\(hora)' WHERE ID = '\(id)'"
+              print("Modificando Tarea: \(modifySQL)")
+              let resultado = database.executeUpdate(modifySQL, withArgumentsIn: [])
+              if !resultado {
+                print("Error: \(database.lastErrorMessage())")
+              } else {
+                // cambiamos el nombre en el array
+                actualizarFechaHoraArray(task: task, fecha: fecha, hora: hora)
+                print("Tarea modificada.")
+              }
+            }
+        }
+    }
   
-  // Recorre el array de tareas y realiza un cambio de nombre.
+    // Realiza un cambio de fecha y hora en la tarea pasada como parámetro
+    func actualizarFechaHoraArray(task: Tarea, fecha: String, hora: String) {
+        for (indice, unaTarea) in tareas.enumerated() {
+          if unaTarea == task {
+            unaTarea.fechaCreacion = fecha
+            unaTarea.horaCreacion  = hora
+            tareas[indice] = unaTarea
+            break
+          }
+        }
+    }
+    
   func renombrarTareaEnArray(anteriorNombre: String, nuevoNombre:String) {
     for (indice, unaTarea) in tareas.enumerated() {
       if unaTarea.nombre == anteriorNombre {
@@ -214,6 +242,7 @@ class TaskDatabase: ObservableObject {
           // añadir la ocurrencia a la tarea correspondiente
           if let tarea = tareaConNombre(ocu.idTask!) {
             tarea.ocurrencias.append(ocu)
+            actualizarFechaTarea(tarea, fecha: ocu.fecha, hora: ocu.hora)
             showBBDD()
           }
         }

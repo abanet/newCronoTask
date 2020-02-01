@@ -22,7 +22,9 @@ struct ContentView: View {
   let timer = MiTimer()
   let reloj = Reloj()
   
-  var body: some View {
+    
+    
+    var body: some View {
     NavigationView {
       ZStack {
         Color(UIColor(named: "background")!)
@@ -49,17 +51,21 @@ struct ContentView: View {
               ForEach(ddbb.tareas, id: \.self) { tarea in
                // NavigationLink(destination: VistaOcurrencias(tarea: tarea)) {
                   VistaTarea(tarea: tarea)
-                    .onTapGesture {
-                      self.marcarTareasComoNoSeleccionadas(excepto: tarea)
-                        tarea.toggle()
-                        print("tarea está: \(tarea.seleccionada)")
-                        if tarea.seleccionada {
-                          self.reloj.tiempo = tarea.tiempoAcumulado
-                          self.tiempoCorriendo = true
-                        } else {
-                          self.tiempoCorriendo = false
+                    .gesture(TapGesture()
+                        .onEnded {_ in
+                            self.cambiarEstadoCrono(tarea: tarea)
+                            print("onTapGesture, tarea estado: \(tarea.seleccionada)")
                         }
-                    }
+                    )
+                    
+              .gesture(LongPressGesture(minimumDuration: 1.0).onEnded({_ in print("LONG") }))
+//                  .onLongPressGesture(minimumDuration: 1.0,  pressing: { (press) in
+//                        if press == true {
+//                            self.cambiarEstadoCrono(tarea: tarea)
+//                            print("onLongPressGesture true")
+//                        }
+//                    }, perform: {print("DONE")})
+//
                   .contextMenu {
                     NavigationLink(destination: VistaOcurrencias(tarea: tarea)) {
                       Text("Log \(tarea.nombre)")
@@ -80,6 +86,7 @@ struct ContentView: View {
                       Image(systemName: "clear")
                     }
                 }
+                  
                 .onReceive(self.timer.currentTimePublisher) { _ in
                   if tarea.seleccionada {
                     self.reloj.incrementarTiempoUnaCentesima()
@@ -125,7 +132,8 @@ struct ContentView: View {
             .shadow(radius: 5, x: 5, y: 5)
             
             }
-          
+        .padding()
+        
           .alert(isPresented: $existeTarea) {
             Alert(title: Text("Duplicated Task".localized), message: Text("MensajeTareaExiste".localized), dismissButton: .default(Text("Ok")))
           }
@@ -211,6 +219,20 @@ struct ContentView: View {
     }
   }
   
+    // cambia el estado de la tarea entre seleccionada y no marcada si no se pasa un estado final.
+    // Si se pasa un estado final se pone a ese estado
+    fileprivate func cambiarEstadoCrono(tarea: Tarea) {
+        self.marcarTareasComoNoSeleccionadas(excepto: tarea)
+        tarea.toggle()
+        
+        print("tarea está: \(tarea.seleccionada)")
+        if tarea.seleccionada {
+            self.reloj.tiempo = tarea.tiempoAcumulado
+            self.tiempoCorriendo = true
+        } else {
+            self.tiempoCorriendo = false
+        }
+    }
 }
 
 struct NavigationConfigurator: UIViewControllerRepresentable {
