@@ -178,6 +178,7 @@ struct ContentView: View {
       self.ddbb.addOcurrencia(nuevaOcurrencia)
       //tarea.addOcurrencia(nuevaOcurrencia)
       tarea.tiempoAcumulado = Tarea.origenTiempo
+      tarea.fechaUltimaVezUtilizada = Fecha().fechaHora()
     }
 
   }

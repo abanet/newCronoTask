@@ -12,6 +12,7 @@ class Fecha: NSObject {
     var fecha: String
     var hora: String
     
+    
     override init(){
         let date = Date()
         let formateador = DateFormatter()
@@ -76,11 +77,22 @@ class Fecha: NSObject {
     }
     
     // fecha completa: fecha con  hora incluida. ¡¡¡NO ESTÁ LOCALIZADO!!!
-    func fechaCompletaStringToDate(fechaCompleta: String) -> Date {
+    class func fechaCompletaStringToDate(fecha: String) -> Date {
         let formateador = DateFormatter()
         formateador.dateFormat = "MM-dd-yyyyHH:mm"
-        let fechaTemp = formateador.date(from: fechaCompleta)
+        let fechaTemp = formateador.date(from: fecha)
         return fechaTemp!
+    }
+    
+    func fechaCompletaDateToString(fecha: Date) -> String {
+        let formateador = DateFormatter()
+        formateador.dateFormat = "MM-dd-yyyyHH:mm"
+        let resultado =  formateador.string(from: fecha)
+        return resultado
+    }
+    
+    func fechaHora() -> String {
+        return fecha + hora
     }
     
     private func intervalo(dias:Int)->TimeInterval {

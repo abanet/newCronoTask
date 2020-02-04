@@ -16,7 +16,9 @@ class Tarea: Identifiable, ObservableObject {
   var tiempo: String
   var fechaCreacion: String
   var horaCreacion: String
+  var dateUltimaVezUtilizada: Date
   var fechaUltimaVezUtilizada: String
+    
   @Published var tiempoAcumulado: String = Tarea.origenTiempo 
   @Published var ocurrencias: [Ocurrencia] = [Ocurrencia]()
   @Published var seleccionada: Bool
@@ -29,9 +31,10 @@ class Tarea: Identifiable, ObservableObject {
     let ahora = Fecha()
     self.fechaCreacion = ahora.fecha
     self.horaCreacion = ahora.hora
-    self.fechaUltimaVezUtilizada = ahora.fecha
-    
-  }
+    self.fechaUltimaVezUtilizada = ahora.fechaHora()
+    self.dateUltimaVezUtilizada = Fecha.fechaCompletaStringToDate(fecha: fechaUltimaVezUtilizada)
+        
+    }
   
   convenience init(nombre: String, fecha: String, hora: String, fechaUltimaVez: String) {
     self.init()
@@ -39,6 +42,8 @@ class Tarea: Identifiable, ObservableObject {
       self.fechaCreacion = fecha
       self.horaCreacion = hora
       self.fechaUltimaVezUtilizada = fechaUltimaVez
+      self.dateUltimaVezUtilizada = Fecha.fechaCompletaStringToDate(fecha: fechaUltimaVezUtilizada)
+    print("Creando tarea <\(nombre)> Asignada a tarea fecha de última vez: \(fechaUltimaVez)")
       
   }
   

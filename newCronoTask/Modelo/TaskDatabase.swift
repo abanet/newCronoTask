@@ -143,7 +143,16 @@ class TaskDatabase: ObservableObject {
     } else {
       // problemas al abrir la base de datos
     }
-    return arrayResultado
+    
+    // ordenar array por fecha
+    let arrayOrdenado = arrayResultado.sorted(by: {
+        $0.dateUltimaVezUtilizada.compare($1.dateUltimaVezUtilizada) == .orderedDescending
+    })
+    print("Array ordenado -----")
+    for tarea in arrayOrdenado {
+        print("\(tarea.nombre) - \(tarea.dateUltimaVezUtilizada)")
+    }
+    return arrayOrdenado
   }
   
   func idParaTarea(descrip: String) -> String? {
@@ -188,18 +197,19 @@ class TaskDatabase: ObservableObject {
     }
   }
   
-    func actualizarFechaTarea(_ task: Tarea, fecha: String, hora: String) {
+    func actualizarFechaTarea(_ task: Tarea) {
         if let id = task.idTarea {
+            task.fechaUltimaVezUtilizada = Fecha().fechaHora()
             let database = FMDatabase(path: self.databasePath)
             if database.open() {
-              let modifySQL = "UPDATE TASKS SET FECHA = '\(fecha)', HORA = '\(hora)' WHERE ID = '\(id)'"
+              let modifySQL = "UPDATE TASKS SET ULTIMAVEZ = '\(task.fechaUltimaVezUtilizada)' WHERE ID = '\(id)'"
               print("Modificando Tarea: \(modifySQL)")
               let resultado = database.executeUpdate(modifySQL, withArgumentsIn: [])
               if !resultado {
                 print("Error: \(database.lastErrorMessage())")
               } else {
                 // cambiamos el nombre en el array
-                actualizarFechaHoraArray(task: task, fecha: fecha, hora: hora)
+                actualizarFechaHoraArray(task: task)
                 print("Tarea modificada.")
               }
             }
@@ -207,11 +217,10 @@ class TaskDatabase: ObservableObject {
     }
   
     // Realiza un cambio de fecha y hora en la tarea pasada como parámetro
-    func actualizarFechaHoraArray(task: Tarea, fecha: String, hora: String) {
+    func actualizarFechaHoraArray(task: Tarea) {
         for (indice, unaTarea) in tareas.enumerated() {
           if unaTarea == task {
-            unaTarea.fechaCreacion = fecha
-            unaTarea.horaCreacion  = hora
+            unaTarea.fechaUltimaVezUtilizada = task.fechaUltimaVezUtilizada
             tareas[indice] = unaTarea
             break
           }
@@ -242,7 +251,7 @@ class TaskDatabase: ObservableObject {
           // añadir la ocurrencia a la tarea correspondiente
           if let tarea = tareaConNombre(ocu.idTask!) {
             tarea.ocurrencias.append(ocu)
-            actualizarFechaTarea(tarea, fecha: ocu.fecha, hora: ocu.hora)
+            actualizarFechaTarea(tarea)
             showBBDD()
           }
         }
@@ -317,7 +326,8 @@ class TaskDatabase: ObservableObject {
   // MARK: Mostrar contenido bbdd para depuración
   func showBBDD() {
     for tarea in tareas {
-      print("Tarea -> \(tarea.nombre)")
+      print("Id/Tarea -> \(tarea.idTarea) - \(tarea.nombre)")
+        print("Ultima Actualización: \(tarea.fechaUltimaVezUtilizada)")
       for ocurrencia in tarea.ocurrencias {
         print("Ocurrencia: \(ocurrencia.fecha) - \(ocurrencia.hora)")
       }
